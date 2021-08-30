@@ -1,0 +1,229 @@
+optional chaining?
+const dogName = adventurer.dog?.name;
+nullice
+//Similar to || but only returns the right-hand operand if the left-hand is null or undefined
+0 ?? "other" // 0
+false ?? "other" // false
+null ?? "other" // "other"
+undefined ?? "other" // "other"
+
+
+
+What is a Query parameter ?
+A query parameter is a parameter that we pass from one route to another route. 
+The best thing about query parameters is that we can subscribe them inside the target route.
+route: ActivatedRoute
+this.route.queryParams.subscribe(params => {
+      this.queryParam = params['val'];
+    });
+
+_router.routerState.queryParams.subscribe(
+      params => console.log('queryParams', params['st']));
+goToPage(pageNum) {
+    this.router.navigate(['/product-list'], { queryParams: { page: pageNum } });
+  }
+  
+resgister services?provide in vs provider
+A service is a singleton object. Angular services are a mechanism of abstracting shared code and functionality throughout the application.
+The first way  to register service is to specify providedIn property using @Injectable decorator. 
+providedIn property registers articleService at the root level (app module).
+There is also a way to limit the scope of the service class by registering it in the providers' property inside @Component decorator. Providers in component decorator and module decorator are independent. Providing a service class inside component creates a separate instance for that component and its nested components. 
+
+view encapsulation?
+ShadowDom view encapsulation uses the browser's native shadow DOM implementation (see Shadow DOM) to attach a 
+shadow DOM to the component's host element, and then puts the component view inside that shadow DOM. The component's styles are included within the shadow DOM.
+**
+Emulated view encapsulation (the default) emulates the behavior of shadow DOM by preprocessing (and renaming) 
+the CSS code to effectively scope the CSS to the component's view. For details, see Inspecting generated CSS below.
+**
+None means that Angular does no view encapsulation. Angular adds the CSS to the global styles. 
+The scoping rules, isolations, and protections discussed earlier don't apply. This mode is essentially the same as pasting the component's styles into the HTML.
+
+ ChangeDetectionStrategy {
+  OnPush: 0
+  Default: 1
+}
+ChangeDetectorRef
+CLASS
+Base class that provides change detection functionality. A change-detection tree collects all views that are to be checked for changes.
+ Use the methods to add and remove views from the tree, initiate change-detection, 
+ and explicitly mark views as dirty, meaning that they have changed and need to be re-rendered.
+ abstract class ChangeDetectorRef {
+  abstract markForCheck(): void
+  abstract detach(): void
+  abstract detectChanges(): void
+  abstract checkNoChanges(): void
+  abstract reattach(): void
+}
+
+accessibility
+
+types of subjects?
+Subject - No initial value or replay available
+AsyncSubject - Emits latest values to subscribers on completion of the async task
+BehaviouralSubject - requires an initial value and emits current values to new subscribers
+ReplaySubject - replays a specified number of last values to new subscribers
+
+same async in 2 places in html?
+We don't want to use async pipe twice because it will create two subscriptions instead of one. Multiple subscriptions can be harmful.
+
+which compoenent lifecycle is best and why?
+@output
+event emitter
+child can emit services
+
+directive
+
+content projectipn
+
+content child vs view child
+View children of a component are the components and elements in this component’s view.
+Content children of a component are the components and elements that are projected into this component’s view by a host component.
+View children are only initialised by the time the AfterViewInit lifecycle phase has been run.
+
+Content children are only initialised by the time the AfterContentInit lifecycle phase has been run.
+pure pipe vs impure ? which is best?
+
+2 modules have same service ,how many instances
+https://angular.io/guide/providers
+shared module?
+linting?\
+
+famous interfaces in angular
+httpInterceptor,onInit,Onchanges,ErrorStateMatcher,PipeTransform
+
+Redux in a nutshell
+A popular JavaScript library for managing the state of your application.
+A single application data container managed by the constraints of immutability.
+Works in synergy with React core of CDD (component Driven Development).
+ACTION
+Actions are plain JavaScript objects that describe what happens but don’t describe how the app state changes.
+STORE
+The Store is the object that brings Action and Reducer together. Store holds the state of the application.
+REDUCER
+Reducers are pure functions that define how the app state changes.
+
+
+Fork Join?
+'forkJoin' waits for each HTTP request to complete and group's all the observables returned by each HTTP call
+ into a single observable array and finally return that observable array. 
+ 
+ The different types of Angular directives are as follows:
+
+Directives?
+Components—directives with a template. This type of directive is the most common directive type.
+Attribute directives—directives that change the appearance or behavior of an element, component, or another directive.
+NgClass—adds and removes a set of CSS classes.
+NgStyle—adds and removes a set of HTML styles.
+NgModel—adds two-way data binding to an HTML form element.
+Structural directives—directives that change the DOM layout by adding and removing DOM elements.
+
+When to use @ViewChild and @ViewChildren in Angular?
+As discussed, both @ViewChild and @ViewChildren only look at the DOM elements that are in our view templates directly.
+
+Another critical difference is that @ViewChild returns a single native DOM element as a reference, while the @ViewChildren decorator returns the list of different native DOM elements in the form of QueryList, which contains the set of elements.
+
+@ViewChild() in a component can communicate with another component or a directive. But if we want to access multiple child references, then we have to use @ViewChildren.
+
+@ViewChildren works the exact same way as @ViewChild, except it returns the QueryList of all elements or directives that match with the given selector, instead of just the first match.
+
+Similar to @ViewChild, if the view DOM changes and new children match the given selector, the property will be updated.
+
+These are some differences between the @ViewChild and @Viewhildren decorators and how to use them in different situations.
+
+What is the difference between any and unknown in TypeScript?
+unknown is the type-safe counterpart of any . Anything is assignable to unknown , but unknown isn't assignable to anything but itself and any without
+a type assertion or a control flow based narrowing. Likewise, 
+no operations are permitted on an unknown without first asserting or narrowing to a more specific type.
+
+What is type Never?
+TypeScript introduced a new type never , which indicates the values that will never occur.
+ The never type is used when you are sure that something is never going to occur. ...
+ Thus, never type is used to indicate the value that will never occur or return from a function.
+ 
+ 
+ 2way binding without ngmodel
+ [value]=”name” is the property binding. We are binding value property of the input element with variable (or expression) name.
+(input)= “expression” is event binding. Whenever input event will be fired expression will be executed.
+“name=$event.target.value” is an expression which assigns entered value to name variable.
+Name variable can be accessed inside AppComponent class.
+
+pure vs impure pipe 
+@Pipe({
+  name: 'myCustomPipe', 
+  pure: false/true        <----- here (default is `true`)
+})
+export class MyCustomPipe {}
+onle instance triggered for pure pipe 
+So as we’ve seen impure pipes can have significant performance hit if not used wisely and carefully. 
+A pure pipe is only called when Angular detects a change in the value or the parameters passed to a pipe.
+An impure pipe is called for every change detection cycle no matter whether the value or parameter(s) changes.
+
+Why interface
+While a class may have initialized properties and methods to help create objects
+, an interface essentially defines the properties and type an object can have. 
+
+Purpose of Guards
+Guards in Angular are nothing but the functionality, logic, and 
+code which are executed before the route is loaded or the ones leaving the route.
+Different types of guards,
+CanActivate guard (e.g. it checks route access).
+CanActivateChild guard (checks child route access).
+CanDeactivate guard (prompt for unsaved changes).
+Resolve guard (pre-fetching route data).
+CanLoad guard (check before loading feature module assets).
+
+can load vs can activate
+CanActivate - Decides if a route can be activated, this guard may not be the best way for 
+feature modules that are lazy loaded, as this guard will always load the module in memory, 
+even if the guard returned false which means user not authorized to access the route.
+**
+CanLoad - Decides if a module can be loaded lazily, Controls if a route can even be loaded. 
+This becomes useful for feature modules that are lazy loaded. They won’t even load if the guard returns false
+
+
+rxjs operators?
+Operators are functions that build on the observables foundation to enable sophisticated manipulation of collections.
+ For example, RxJS defines operators such as map() , filter() , concat() , and flatMap() .
+ You can use pipes to link operators together. Pipes let you combine multiple functions into a single function.
+ 
+ Observables	Promises
+Emit multiple values over a period of time.
+	Emit a single value at a time.
+Are lazy: they’re not executed until we subscribe to them using the subscribe() method.
+	Are not lazy: execute immediately after creation.
+Have subscriptions that are cancellable using the unsubscribe() method, which stops the listener from receiving further values.
+	Are not cancellable.
+Provide the map for forEach, filter, reduce, retry, and retryWhen operators.
+	Don’t provide any operations.
+Deliver errors to the subscribers.
+	Push errors to the child promises.
+	
+
+What is the use of content projection in Angular?
+Content projection allows you to insert a shadow DOM in your component. 
+To put it simply, if you want to insert HTML elements or other components in a component, 
+then you do that using the concept of content projection. In Angular, 
+you achieve content projection using < ng-content >< /ng-content >.
+
+Dependency injection in Angular
+Dependencies are services or objects that a class needs to perform its function.
+ Dependency injection, or DI, is a design pattern in which a class requests dependencies from external sources rather than creating them.
+Angular's DI framework provides dependencies to a class upon instantiation.
+
+Tips to Secure Your Angular Application
+Prevent application from Cross-Site Scripting (XSS) ...
+Use Route guards when required. ...
+Implement CSP (Content Security Policies) ...
+Do not use DOM's APIs directly. ...
+Prevent CSRF (Cross-site request forgery) ...
+Prevent Cross-Site Script Inclusion (XSSI) ...
+Up-to-date Angular Librarie
+
+Map modifies each item emitted by a source Observable and emits the modified item.
+FlatMap, SwitchMap and ConcatMap also applies a function on each emitted item but instead of returning the modified item, it returns the Observable itself which can emit data again.
+FlatMap and ConcatMap work is pretty much same. They merges items emitted by multiple Observables and returns a single Observable.
+The difference between FlatMap and ConcatMap is, the order in which the items are emitted.
+FlatMap can interleave items while emitting i.e the emitted items order is not maintained.
+ConcatMap preserves the order of items. But the main disadvantage of ConcatMap is, it has to wait for each Observable to complete its work thus asynchronous is not maintained.
+SwitchMap is a bit different from FlatMap and ConcatMap. SwitchMap unsubscribe from previous source Observable whenever new item started emitting, thus always emitting the items from current Observable.
